@@ -1,12 +1,9 @@
 package emojivacation;
-
 import edu.macalester.graphics.*;
-
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
 @SuppressWarnings("SameParameterValue")
 public class EmojiVacation {
     private static final Color
@@ -17,20 +14,15 @@ public class EmojiVacation {
         TREE_TRUNK_COLOR = new Color(0x553511),
         TREE_LEAVES_COLOR = new Color(0x17af13),
         GRASS_COLOR = new Color(0xbcda9f),
-        MOUNTAIN_COLOR = new Color(0x769afe),
-        NO_SLIDE_COLOR = new Color(0x22211a);
-
+        MOUNTAIN_COLOR = new Color(0x769afe);
     private static final int
         SCENE_WIDTH = 800,
         SCENE_HEIGHT = 600;
-
     private static Random random = new Random();
-
     public static void main(String[] args) {
         CanvasWindow canvas = new CanvasWindow("Emoji Family Vacation", SCENE_WIDTH, SCENE_HEIGHT);
         doSlideShow(canvas);
     }
-
     private static void doSlideShow(CanvasWindow canvas) {
         while (true) {
             generateVacationPhoto(canvas);
@@ -42,7 +34,6 @@ public class EmojiVacation {
             }
         }    
     }
-
     private static void generateVacationPhoto(CanvasWindow canvas) {
         canvas.setBackground(randomColorVariation(SKY_BLUE, 8));
         addSun(canvas);
@@ -55,11 +46,8 @@ public class EmojiVacation {
             canvas.add(faces);
         }
         positionFamily(family, 60, 550, 20);
-        
     }
-
     // –––––– Emoji family –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
-
     private static List<GraphicsGroup> createFamily(int adultCount, int childCount) {
         double adultSize = 160, childSize = 90;
         List<GraphicsGroup> family = new ArrayList<>();
@@ -69,25 +57,9 @@ public class EmojiVacation {
         for (int i = 0; i < childCount; i++) {
             family.add(createRandomEmoji(childSize));
         }
-        // TODO: [Instructions step 6] Change this so that instead of always creating one adult
-        //       and one child, it instead creates a list containing adultCount adults,
-        //       and childCount children.
-        //
-        // Hint: You can't use List.of() to do this, because you don't know the size of the
-        // resulting list before the code actually runs. What can you use?
-        //
         return family;
     }
-    
-
     private static GraphicsGroup createRandomEmoji(double size) {
-        // TODO: [Instructions step 7] Change this so that instead of always creating a smiley face,
-        //       it randomly selects one of the many available emojis.
-        //
-        // Hint: You can use chained if/else conditionals: with a certain probability, return emoji
-        // type A, else with some other probability return emoji type B, else with a certain
-        // probability ... etc ... else return a smiley by default.
-        //
         double randomValue = random.nextDouble();
         if (randomValue < 0.2) {
             return ProvidedEmojis.createSmileyFace(size);
@@ -105,30 +77,18 @@ public class EmojiVacation {
             return ProvidedEmojis.createNauseousFace(size);
         }
     }
-
     private static void positionFamily(
             List<GraphicsGroup> family,
             double leftX,
             double baselineY,
             double spacing
     ) {
-        // TODO: [Instructions step 5] Iterate over the emojis in the list,
-        //       and position them all in a neat row
         for (GraphicsGroup faces : family) {
             faces.setPosition(leftX, baselineY - faces.getHeight());
             leftX += spacing + faces.getWidth();
         }
-
-        // The leftmost emoji’s left edge should be at leftX, and spacing is the number of pixels that should be between
-        // each emoji and the next. But how to you space them if the kids and adults have different widths? (Hint: you
-        // can ask any graphics object for its width.)
-        //
-        // The bottom of each emoji should be baselineY. But setPosition() sets the _top_! How do you set the bottom to
-        // a given position? (Hint: you can ask any graphics object for its height.)
     }
-
     // –––––– Scenery ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
-
     /**
      * Fills the bottom of the screen with a solid color. Even emojis need to stand somewhere!
      *
@@ -143,7 +103,6 @@ public class EmojiVacation {
         ground.setStroked(false);
         canvas.add(ground);
     }
-
     /**
      * Creates a mountain range.
      *
@@ -159,8 +118,6 @@ public class EmojiVacation {
             canvas.add(createLayerOfMountains(baseY - layer * size * 0.2, size));
         }
         }
-        
-
     /**
      * Creates one layer of a mountain range.
      * @param layerBaseY The position of the feet of the mountains
@@ -168,11 +125,9 @@ public class EmojiVacation {
      */
     private static GraphicsGroup createLayerOfMountains(double layerBaseY, double size) {
         GraphicsGroup group = new GraphicsGroup();
-
         double layerLeft = randomDouble(-size, 0);
         double layerRight = SCENE_WIDTH + size;
         Color layerColor = randomColorVariation(MOUNTAIN_COLOR, 16);
-
         double x = layerLeft;
         while (x < layerRight) {
             double curHeight = randomDouble(size * 0.4, size),
@@ -189,7 +144,6 @@ public class EmojiVacation {
         }
         return group;
     }
-
     /**
      * Creates many trees spanning the full width of the screen.
      *
@@ -209,7 +163,6 @@ public class EmojiVacation {
             canvas.add(tree);
         }
     }
-
     /**
      * Creates a tree with a brown trunk and idyllic green leaves.
      *
@@ -218,10 +171,8 @@ public class EmojiVacation {
      */
     private static GraphicsGroup createTree(double trunkHeight, double leavesSize) {
         GraphicsGroup group = new GraphicsGroup();
-
         Color trunkColor = randomColorVariation(TREE_TRUNK_COLOR, 8);
         double trunkWidth = trunkHeight * 0.2;
-
         Rectangle trunk = new Rectangle(
             -trunkWidth / 2, -trunkHeight,
             trunkWidth, trunkHeight);
@@ -229,7 +180,6 @@ public class EmojiVacation {
         trunk.setFilled(true);
         trunk.setStroked(false);
         group.add(trunk);
-
         // A little roundness at the bottom of the trunk
         double baseEllipseHeight = trunkWidth * 0.25;
         Ellipse trunkBase = new Ellipse(
@@ -239,7 +189,6 @@ public class EmojiVacation {
         trunkBase.setFilled(true);
         trunkBase.setStroked(false);
         group.add(trunkBase);
-
         GraphicsGroup treeTop = createPuff(
             leavesSize, leavesSize,
             false,
@@ -247,16 +196,13 @@ public class EmojiVacation {
             randomColorVariation(TREE_LEAVES_COLOR, 16));
         treeTop.setPosition(0, -trunkHeight);
         group.add(treeTop);
-
         return group;
     }
-
     private static void addSun(CanvasWindow canvas) {
         GraphicsGroup sun = createSun(randomDouble(30, 50), randomInt(8, 24));
         sun.setCenter(randomDouble(100, 700), randomDouble(60, 200));
         canvas.add(sun);
     }
-
     /**
      * Puts the sun in your sky.
      *
@@ -265,7 +211,6 @@ public class EmojiVacation {
      */
     private static GraphicsGroup createSun(double radius, int rayCount) {
         GraphicsGroup sun = new GraphicsGroup();
-
         Ellipse sunCenter = new Ellipse(
             -radius, -radius,
             radius * 2, radius * 2);
@@ -274,11 +219,9 @@ public class EmojiVacation {
         sunCenter.setStrokeColor(SUN_BORDER_YELLOW);
         sunCenter.setStrokeWidth(3);
         sun.add(sunCenter);
-
         addSunRays(sun, radius * 1.2, radius * 1.4, rayCount);
         return sun;
     }
-
     /**
      * Draws the rays around the sun. Adds the rays to the given graphics group.
      */
@@ -300,7 +243,6 @@ public class EmojiVacation {
             sun.add(ray);
         }
     }
-
     /**
      * Creates clouds of a random size and puffiness, spaced in neat rows and scattered horizontally.
      */
@@ -317,7 +259,6 @@ public class EmojiVacation {
             canvas.add(cloud);
         }
     }
-
     /**
      * Creates a clump of overlapping circles. Useful for clouds and treetops.
      *
@@ -362,16 +303,13 @@ public class EmojiVacation {
         }
         return group;
     }
-
     // –––––– Randomness helpers –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
-
     /**
      * Convenience to return a random floating point number, min ≤ n < max.
      */
     private static double randomDouble(double min, double max) {
         return random.nextDouble() * (max - min) + min;
     }
-
     /**
      * Convenience to return a random integer, min ≤ n ≤ max.
      * Note that max is inclusive.
@@ -379,14 +317,12 @@ public class EmojiVacation {
     private static int randomInt(int min, int max) {
         return random.nextInt(max - min + 1) + min;
     }
-
     /**
      * Convenience to return true with the given percent change (0 = always false, 100 = always true).
      */
     private static boolean percentChance(double chance) {
         return random.nextDouble() * 100 < chance;
     }
-
     /**
      * Returns a slightly different color than the given one. Useful for making a bunch of items not
      * look entirely identical.
@@ -398,7 +334,6 @@ public class EmojiVacation {
             colorChannelVariation(color.getBlue(), amount),
             color.getAlpha());
     }
-
     /**
      * Varies the given value randomly, pinned to [0...255].
      */
